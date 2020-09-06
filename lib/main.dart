@@ -50,7 +50,17 @@ class _MyListPageState extends State<MyListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('kasikari')),
+      appBar: AppBar(
+        title: Text('kasikari'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              print('tap');
+            },
+          ),
+        ],
+      ),
       body: Center(
         child: Text(
           'hoge',
