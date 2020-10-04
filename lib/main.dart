@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_kasikari_memo/repository.dart';
+
+import 'input_form.dart';
+import 'repository.dart';
+import 'splash_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,29 +19,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SplashPage(),
         '/list': (context) => MyListPage(),
+        '/input': (context) => InputForm(),
       },
     );
-  }
-}
-
-class SplashPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    load(context);
-
-    return Scaffold(
-      body: Center(
-        child: FractionallySizedBox(
-          widthFactor: 0.7,
-          child: LinearProgressIndicator(),
-        ),
-      ),
-    );
-  }
-
-  Future<void> load(BuildContext context) async {
-    await Future.delayed(Duration(seconds: 3));
-    Navigator.of(context).pushReplacementNamed('/list');
   }
 }
 
@@ -79,8 +62,13 @@ class _MyListPageState extends State<MyListPage> {
         builder: (context) => FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            final snackBar = SnackBar(content: Text('Pressed!'));
-            Scaffold.of(context).showSnackBar(snackBar);
+            // push new add
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  settings: const RouteSettings(name: '/new'),
+                  builder: (BuildContext context) => InputForm()),
+            );
           },
         ),
       ),
@@ -103,7 +91,7 @@ class _MyListPageState extends State<MyListPage> {
                 FlatButton(
                   child: Text('Edit'),
                   onPressed: () {
-                    // TODO:編集画面へ遷移
+                    print('press edit button');
                   },
                 )
               ],
