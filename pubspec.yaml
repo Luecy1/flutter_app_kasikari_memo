@@ -16,6 +16,10 @@ dependencies:
 
   share: ^0.5.3
 
+  # SQLite
+  sqflite:
+  path:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
