@@ -4,7 +4,12 @@ import 'input_form.dart';
 import 'repository.dart';
 import 'splash_page.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Repository().init();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -19,7 +24,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SplashPage(),
         '/list': (context) => MyListPage(),
-        '/input': (context) => InputForm(),
       },
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'repository.dart';
+
 void main() {
   runApp(
     MaterialApp(
@@ -9,7 +11,9 @@ void main() {
 }
 
 class InputForm extends StatefulWidget {
-  // TODO コンストラクタの追加
+  final Memo memo;
+
+  const InputForm({Key key, this.memo}) : super(key: key);
 
   @override
   _InputFormState createState() => _InputFormState();
@@ -25,19 +29,51 @@ class _InputFormState extends State<InputForm> {
     });
   }
 
+  Future<DateTime> _selectTime(BuildContext context) {
+    return showDatePicker(
+        context: context,
+        initialDate: _data.date,
+        firstDate: DateTime(_data.date.year - 2),
+        lastDate: DateTime(_data.date.year + 2));
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.memo != null) {
+      _data.borrowOrLand = widget.memo.borrowOrLend;
+      _data.stuff = widget.memo.stuff;
+      _data.date = widget.memo.date;
+      _data.user = widget.memo.user;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('input'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: () {},
+            onPressed: () {
+              // TODO
+
+              final memo = Memo(
+                borrowOrLend: 'borrow',
+                stuff: '2',
+                date: DateTime.now(),
+                user: 'taro',
+              );
+              Repository().saveMemo(memo);
+            },
           ),
           IconButton(
             icon: Icon(Icons.delete),
-            onPressed: () {},
+            onPressed: () {
+              // TODO
+
+              // kari
+              Repository().fetchMemoList().then((value) {
+                print(value);
+              });
+            },
           ),
           IconButton(
             icon: Icon(Icons.share),
