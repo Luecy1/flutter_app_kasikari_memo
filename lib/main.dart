@@ -52,12 +52,20 @@ class _MyListPageState extends State<MyListPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
-          future: Repository().memo(),
+          future: Repository().fetchMemoList(),
           builder: (BuildContext context, AsyncSnapshot<List<Memo>> snapshot) {
             if (!snapshot.hasData) return const Text('Loading');
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) => _buildList(context, snapshot.data[index]),
+            return RefreshIndicator(
+              child: ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) => _buildList(context, snapshot.data[index]),
+              ),
+              onRefresh: () async {
+                var snackBar = SnackBar(
+                  content: Text('refresh'),
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              },
             );
           },
         ),

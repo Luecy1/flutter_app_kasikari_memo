@@ -53,23 +53,25 @@ class _InputFormState extends State<InputForm> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              // TODO
+              print('push save button');
 
-              final memo = Memo(
-                borrowOrLend: 'borrow',
-                stuff: '2',
-                date: DateTime.now(),
-                user: 'taro',
-              );
-              Repository().saveMemo(memo);
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+
+                final memo = Memo(
+                  borrowOrLend: this._data.borrowOrLand,
+                  stuff: this._data.stuff,
+                  date: DateTime.now(),
+                  user: this._data.user,
+                );
+                Repository().saveMemo(memo);
+                Navigator.pop(context);
+              }
             },
           ),
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
-              // TODO
-
-              // kari
               Repository().fetchMemoList().then((value) {
                 print(value);
               });
